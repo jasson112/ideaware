@@ -1,0 +1,21 @@
+version: "3"
+
+networks:
+  default:
+    external:
+      name: ideaware_net
+
+services:
+  ideaware-mysql:
+    container_name: ideaware-mysql
+    build:
+      context: ../mysql/
+      dockerfile: Dockerfile
+    ports:
+      - "3306:3306"
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+        MYSQL_ROOT_PASSWORD: ideaware
+        MYSQL_DATABASE: ideaware
+        MYSQL_USER: ideaware
+        MYSQL_PASSWORD: ideaware

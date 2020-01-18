@@ -1,0 +1,18 @@
+version: "3"
+
+networks:
+  default:
+    external:
+      name: ideaware_net
+
+services:
+  ideaware-web: 
+    container_name: ideaware-web
+    build:
+      context: ./nginx/
+      dockerfile: Dockerfile
+    ports:
+      - "5052:80"
+    volumes:
+      - ../../blog:/usr/share/nginx/html/ideaware
+      - ./nginx/logs:/var/log/nginx/
