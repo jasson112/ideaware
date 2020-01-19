@@ -2,11 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Tags;
+use App\Tag;
 use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,10 +25,8 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags = Tags::all();
-
-        return view('tags.index',compact('tags'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+        $tags = Tag::all();
+        return view('tags.index',compact('tags'));
     }
 
     /**
@@ -43,7 +52,7 @@ class TagController extends Controller
         ]);
         $requestData = $request->all();
 
-        Tags::create($requestData);
+        Tag::create($requestData);
 
         return redirect()->route('tags.index')
             ->with('success','Post created successfully.');
@@ -52,24 +61,24 @@ class TagController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Tags  $tags
+     * @param  \App\Tag  $tags
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $tags = Tags::find($id);
+        $tags = Tag::find($id);
         return view('tags.show',compact('tags'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Tags  $tags
+     * @param  \App\Tag  $tags
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $tags = Tags::find($id);
+        $tags = Tag::find($id);
         return view('tags.edit',compact('tags'));
     }
 
@@ -77,7 +86,7 @@ class TagController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Tags  $tags
+     * @param  \App\Tag  $tags
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -86,7 +95,7 @@ class TagController extends Controller
             'name' => 'required'
         ]);
         $requestData = $request->all();
-        $posts = Tags::find($id);
+        $posts = Tag::find($id);
         $posts->update($requestData);
 
         return redirect()->route('tags.index')
@@ -96,12 +105,12 @@ class TagController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Tags  $tags
+     * @param  \App\Tag  $tags
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $posts = Tags::find($id);
+        $posts = Tag::find($id);
         $posts->delete();
 
         return redirect()->route('tags.index')

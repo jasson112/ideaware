@@ -14,19 +14,40 @@
                         </ul>
                     </div>
                 @endif
-                <h1 class="title has-text-centered is-fullwidth">Edit Post {{ $posts->id }}</h1>
-                <form action="{{ route('posts.update', $posts->id) }}" method="POST">
+                <h1 class="title has-text-centered is-fullwidth">Edit User {{ $user->id }}</h1>
+                <form action="{{ route('users.update', $user->id) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="field">
-                        <label class="label">{{ __('Title') }}</label>
+                        <label class="label">{{ __('Name') }}</label>
                         <div class="control">
-                            <input class="input @error('title') is-danger @enderror" value="{{ $posts->title }}" name="title" type="text">
+                            <input class="input @error('name') is-danger @enderror" value="{{ $user->name }}" name="name" type="text">
                         </div>
-                        @error('title')
+                        @error('name')
                         <p class="help is-danger">{{ $message }}</p>
                         @enderror
                     </div>
+
+                    <div class="field">
+                        <label class="label">{{ __('Email') }}</label>
+                        <div class="control">
+                            <input class="input @error('email') is-danger @enderror" value="{{ $user->email }}" name="email" type="text">
+                        </div>
+                        @error('email')
+                        <p class="help is-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="field">
+                        <label class="label">{{ __('Password') }}</label>
+                        <div class="control">
+                            <input class="input @error('password') is-danger @enderror" value="{{ $user->password }}" name="password" type="password">
+                        </div>
+                        @error('password')
+                        <p class="help is-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+
                     <h2 class="title">Tags</h2>
 
                     @foreach ($tags as $tag)
@@ -34,7 +55,7 @@
                             $checked = false
                         @endphp
 
-                        @foreach ($posts->tags as $gabble)
+                        @foreach ($user->tags as $gabble)
                             @if($gabble->id == $tag->id)
                                 @php
                                     $checked = true
@@ -49,10 +70,9 @@
                         </div>
                     @endforeach
 
-
                     <div class="has-text-centered is-grouped">
                         <button class="button is-link" type="submit">{{ __('Update') }}</button>
-                        <a class="button is-light" href="{{ route('posts.index') }}">{{ __('Cancel') }}</a>
+                        <a class="button is-light" href="{{ route('users.index') }}">{{ __('Cancel') }}</a>
                     </div>
                 </form>
             </div>

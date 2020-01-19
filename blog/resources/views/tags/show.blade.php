@@ -13,7 +13,7 @@
 
 
                 <div class="has-text-centered is-grouped">
-                    <form action="{{ route('posts.destroy',$tags->id) }}" method="POST">
+                    <form action="{{ route('tags.destroy',$tags->id) }}" method="POST">
                         <a class="button is-link" href="{{ route('tags.edit',$tags->id) }}">Edit</a>
                         <a class="button is-light" href="{{ route('tags.index') }}">Cancel</a>
                         @csrf

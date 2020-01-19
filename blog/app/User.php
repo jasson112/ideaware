@@ -38,10 +38,10 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get all of the user's taggables.
+     * Get all of the post's taggables.
      */
-    public function taggables()
+    public function tags()
     {
-        return $this->morphMany('App\Taggables', 'taggable');
+        return $this->morphToMany('App\Tag', 'taggable');
     }
 }

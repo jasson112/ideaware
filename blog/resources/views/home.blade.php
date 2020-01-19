@@ -1,23 +1,28 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in!
-                </div>
+    <section class="hero is-fullwidth">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">Welcome to the admin</h1>
+                <ul>
+                    <li>
+                        <a href="{{ route('posts.index') }}">
+                            <h2 class="subtitle">Click to see Posts list</h2>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('tags.index') }}">
+                            <h2 class="subtitle">Click to see Tags list</h2>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('users.index') }}">
+                            <h2 class="subtitle">Click to see Users list</h2>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
-    </div>
-</div>
+    </section>
 @endsection

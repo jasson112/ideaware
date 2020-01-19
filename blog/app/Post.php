@@ -4,17 +4,18 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Posts extends Model
+class Post extends Model
 {
     protected $fillable = [
         'title',
         'user_id'
     ];
+
     /**
      * Get all of the post's taggables.
      */
-    public function taggables()
+    public function tags()
     {
-        return $this->morphMany('App\Taggables', 'taggable');
+        return $this->morphToMany('App\Tag', 'taggable');
     }
 }

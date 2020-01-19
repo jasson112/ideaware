@@ -10,6 +10,17 @@
                         <input class="input @error('title') is-danger @enderror" value="{{ $posts->title }}" name="title" type="text" disabled>
                     </div>
                 </div>
+                <div class="field">
+                    <label class="label">{{ __('Tags') }}</label>
+
+                    <div class="control">
+                        @foreach ($posts->tags as $tag)
+                            <span class="tag is-info">
+                              {{ $tag->name }}
+                            </span>
+                        @endforeach
+                    </div>
+                </div>
 
 
                 <div class="has-text-centered is-grouped">

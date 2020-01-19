@@ -14,8 +14,8 @@ class CreateTaggablesTable extends Migration
     public function up()
     {
         Schema::create('taggables', function (Blueprint $table) {
-            $table->bigIncrements('tag_id');
-            $table->morphs('tagg');
+            $table->integer('tag_id')->unsigned();
+            $table->morphs('taggable');
         });
     }
 

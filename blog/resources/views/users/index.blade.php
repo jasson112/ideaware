@@ -6,7 +6,7 @@
             {{ $message }}
         </div>
     @endif
-    <h1 class="title has-text-centered is-fullwidth">Tags</h1>
+    <h1 class="title has-text-centered is-fullwidth">Users</h1>
 
 
     <section class="hero is-fullwidth">
@@ -19,7 +19,7 @@
 
                         <div class="navbar-end">
                             <div class="navbar-item">
-                                <a class="button is-primary" href="{{ route('tags.create') }}"> Create New Tag</a>
+                                <a class="button is-primary" href="{{ route('users.create') }}"> Create New User</a>
                             </div>
                         </div>
                     </div>
@@ -28,17 +28,19 @@
                     <tr>
                         <th>Id</th>
                         <th>Name</th>
-                        <th>Posts</th>
+                        <th>E-Mail</th>
+                        <th>Tags</th>
                         <th>Action</th>
                     </tr>
-                    @foreach ($tags as $tag)
+                    @foreach ($users as $user)
                         <tr>
-                            <td>{{ $tag->id }}</td>
-                            <td>{{ $tag->name }}</td>
+                            <td>{{ $user->id }}</td>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->email }}</td>
                             <td>
-                                @forelse ($tag->posts as $post)
+                                @forelse ($user->tags as $tag)
                                     <span class="tag is-info">
-                                      {{ $post->title }}
+                                      {{ $tag->name }}
                                     </span>
                                 @empty
                                     None
@@ -46,9 +48,9 @@
                             </td>
                             <td>
                                 <div class="buttons">
-                                    <a class="button is-light" href="{{ route('tags.show',$tag->id) }}">Show</a>
-                                    <a class="button is-info" href="{{ route('tags.edit',$tag->id) }}">Edit</a>
-                                    <form action="{{ route('tags.destroy',$tag->id) }}" method="POST">
+                                    <a class="button is-light" href="{{ route('users.show',$user->id) }}">Show</a>
+                                    <a class="button is-info" href="{{ route('users.edit',$user->id) }}">Edit</a>
+                                    <form action="{{ route('users.destroy',$user->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="button is-danger">Delete</button>

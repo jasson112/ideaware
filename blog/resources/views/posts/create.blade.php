@@ -27,6 +27,17 @@
                         @enderror
                     </div>
 
+                    <h2 class="title">Tags</h2>
+
+                    @foreach ($tags as $tag)
+                        <div class="field">
+                            <label class="checkbox">
+                                <input type="checkbox" name="tags[]" value="{{ $tag->id }}" >
+                                {{ $tag->name }}
+                            </label>
+                        </div>
+                    @endforeach
+
                     <div class="has-text-centered is-grouped">
                         <button class="button is-link" type="submit">{{ __('Save') }}</button>
                         <a class="button is-light" href="{{ route('posts.index') }}">{{ __('Cancel') }}</a>

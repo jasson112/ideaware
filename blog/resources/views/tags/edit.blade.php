@@ -28,6 +28,8 @@
                         @enderror
                     </div>
 
+
+
                     <div class="has-text-centered is-grouped">
                         <button class="button is-link" type="submit">{{ __('Update') }}</button>
                         <a class="button is-light" href="{{ route('tags.index') }}">{{ __('Cancel') }}</a>

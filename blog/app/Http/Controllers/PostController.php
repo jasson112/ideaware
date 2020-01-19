@@ -2,13 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Posts;
-use App\Taggables;
-use App\Tags;
+use App\Post;
+use App\Taggable;
+use App\Tag;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,8 +26,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Posts::all();
-        $tags = Tags::all();
+        $posts = Post::all();
+        $tags = Tag::all();
 
         return view('posts.index',compact('posts', 'tags'));
     }
@@ -29,7 +39,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        $tags = Tag::all();
+        return view('posts.create', compact('tags'));
     }
 
     /**
@@ -46,7 +57,8 @@ class PostController extends Controller
         $requestData = $request->all();
         $requestData['user_id'] = $request->user()->id;
 
-        Posts::create($requestData);
+        $post = Post::create($requestData);
+        $post->tags()->sync($request->tags);
 
         return redirect()->route('posts.index')
             ->with('success','Post created successfully.');
@@ -55,25 +67,26 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Posts  $posts
+     * @param  \App\Post  $posts
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $posts = Posts::find($id);
+        $posts = Post::find($id);
         return view('posts.show',compact('posts'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Posts  $posts
+     * @param  \App\Post  $posts
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $posts = Posts::find($id);
-        $tags = Tags::all();
+        $posts = Post::find($id);
+        $tags = Tag::all();
+
         return view('posts.edit',compact('posts', 'tags'));
     }
 
@@ -81,7 +94,7 @@ class PostController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Posts  $posts
+     * @param  \App\Post  $posts
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -90,13 +103,10 @@ class PostController extends Controller
             'title' => 'required'
         ]);
         $requestData = $request->all();
-        $posts = Posts::find($id);
-        foreach ($requestData['tags'] as $key => $value) {
-            $tag = new Taggables();
-            $posts->taggables()->save($tag);
-        }
+        $posts = Post::find($id);
 
         $posts->update($requestData);
+        $posts->tags()->sync($request->tags);
 
         return redirect()->route('posts.index')
             ->with('success','Post updated successfully.');
@@ -105,12 +115,12 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Posts  $posts
+     * @param  \App\Post  $posts
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $posts = Posts::find($id);
+        $posts = Post::find($id);
         $posts->delete();
 
         return redirect()->route('posts.index')

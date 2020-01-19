@@ -37,6 +37,9 @@
                             <a class="navbar-item" href="{{ route('tags.index') }}">
                                 Tags
                             </a>
+                            <a class="navbar-item" href="{{ route('users.index') }}">
+                                Users
+                            </a>
                         </div>
                     @endauth
                     <div class="navbar-end">
