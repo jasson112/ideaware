@@ -17,3 +17,11 @@ intall docker desktop and run these commands:
     ``` shell script 
     docker-compose -f ./docker/mysql/docker-compose.yaml up -d
     ```
+5. run migrate
+    ``` shell script 
+    php artisan migrate
+    ```
+6. run seed
+    ``` shell script 
+    php artisan db:seed
+    ```
